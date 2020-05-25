@@ -6,6 +6,8 @@ import scala.concurrent.duration._
 import ch.qos.logback.classic.{Level, LoggerContext}
 import org.slf4j.LoggerFactory
 
+import java.util.UUID
+
 class KeycloakLoginSimulator extends Simulation{
 
     // Number of login requests to simulate on execution
@@ -23,8 +25,7 @@ class KeycloakLoginSimulator extends Simulation{
             - Loggin all failed HTTP requests made during simulation
             context.getLogger("io.gatling.http").setLevel(Level.valueOf("DEBUG"))
     ***/
-    val context: LoggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
-    context.getLogger("io.gatling.http").setLevel(Level.valueOf("TRACE"))
+
     /** Keycloak server should be running on your local machine for this URL to be available
             NOTE:   This is the most basic definition for a scenario's baseUrl. Details on what attributes
                     can be defined at this point can be found in the official 
@@ -68,9 +69,11 @@ class KeycloakLoginSimulator extends Simulation{
         .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/auth")
         .queryParam("redirect_uri", "http://localhost:8080/auth/realms/load-testing/")
         .queryParam("client_id", "account")
-        .queryParam("response_type", "code")
+        .queryParam("response_type", "code id_token token")
         .queryParam("response_mode", "fragment")
         .queryParam("scope", "openid")
+        .queryParam("state",UUID.randomUUID().toString())
+		.queryParam("nonce",UUID.randomUUID().toString())
         .headers(headers_3)
         .check(status.is(200))
         .check(css("#kc-form-login")
@@ -78,11 +81,11 @@ class KeycloakLoginSimulator extends Simulation{
                     .transform(variable => {variable.getAttribute("action") })
                     .saveAs("loginurl"))
         )
-        .exec(http("Login")
+        .exec(http("Login for basic user")
 				.post("${loginurl}")
 				.headers(headers_3)
 				.formParam("username", "testaccount")
-				.formParam("password", "Password")
+				.formParam("password", "password")
 				.check(status.is(302))
                 .check(header("Location").saveAs("nextPage"))
 		)
@@ -92,6 +95,42 @@ class KeycloakLoginSimulator extends Simulation{
                 .headers(headers_3)
                 .check(status.is(200))
         )
+        
+        .exec(http("Logout basic user")
+                .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/logout")
+        )
+
+        .exec(http("Second unauthenticated request")
+                .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/auth")
+                .queryParam("redirect_uri", "http://localhost:8080/auth/load-testing/users")
+                .queryParam("client_id", "account")
+                .queryParam("response_type", "code id_token token")
+                .queryParam("response_mode", "fragment")
+                .queryParam("scope", "openid")
+                .queryParam("state",UUID.randomUUID().toString())
+		        .queryParam("nonce",UUID.randomUUID().toString())
+                .headers(headers_3)
+                .check(status.is(200))
+                .check(css("#kc-form-login")
+                            .ofType[Node]
+                            .transform(variable => {variable.getAttribute("action") })
+                            .saveAs("loginurl"))
+        )
+
+        .exec(http("Login for realm admin")
+                .post("${loginurl}")
+                .headers(headers_3)
+				.formParam("username", "realm-admin")
+				.formParam("password", "password")
+				.check(status.is(302))
+                .check(header("Location").saveAs("nextPage"))
+
+        )
+        
+        .exec(http("Logout realm admin")
+                .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/logout")
+        )
+        
     /**
         The users variable is used to display on command prompt the progress of the current simulation. The 
         following is an example of a progress display on the command prompt during execution of this scenario is
