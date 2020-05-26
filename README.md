@@ -2,7 +2,7 @@
 
 This project is a basic gatling integration for loadtesting keycloak logins.
 
-_*Please note*: The test scenario in this project executes multiple logins for some users, who are a part of a test realm. In order to run this test, some configuration steps listed below must be implemented on your running keycloak server or the `KeycloakLoginSimulator.scala` test scenario must be modified to reflect your realm configurations._
+_**Please note**: The test scenario in this project executes multiple logins for some users, who are a part of a test realm. In order to run this test, some configuration steps listed below must be implemented on your running keycloak server or the `KeycloakLoginSimulator.scala` test scenario must be modified to reflect your realm configurations._
 
 ## Installations
 
@@ -24,7 +24,7 @@ _NOTE: The following steps are required in order to run this utility on your ISE
 
 - Open the `sbtconfig.txt` file located in the `Program Files (x86)/sbt/conf` folder.
 
-- Append the following at the end of the file by replacing the [Proxy Host] and [Proxy Port] with the address and port number found in your _Manual proxy setup_ (details for which can be found by clicking _Start > Settings > Network & Internet_ then accessing the _Proxy_ tab on the left hand side of the screen).
+- Append the following at the end of the file by replacing the [Proxy Host] and [Proxy Port] with the address and port number found in your **Manual proxy setup** (details for which can be found by clicking **Start > Settings > Network & Internet** then accessing the **Proxy** tab on the left hand side of the screen).
 
 ```
 -Dsbt.log.format=true
@@ -49,7 +49,7 @@ _NOTE: The following steps are required in order to run this utility on your ISE
 
 - Create your realm admin user with username `realm-admin` and password `password` and assign them the role of `security-admin-console`
 
-- Modify the client setting for `account` and `security-admin-console` so the _access type_ is _public_ and set _Implicit Flow Enabled_ to _true_ for both clients. _Note: these realm setting changes were made in order to make this basic scala utility test case work. More infromation on this needs to be gathered. For now it seems that keeping the access type to confidential requires an access token to be collected and used post login._
+- Modify the client setting for `account` and `security-admin-console` so the **access type** is _public_ and set **Implicit Flow Enabled** to **true** for both clients. _Note: these realm setting changes were made in order to make this basic scala utility test case work. More infromation on this needs to be gathered. For now it seems that keeping the access type to confidential requires an access token to be collected and used post login._
 
 - In the _Manage > Events Config tab_, set the _Save Events_ value to _true_.
 
