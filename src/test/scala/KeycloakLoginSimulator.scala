@@ -95,15 +95,15 @@ class KeycloakLoginSimulator extends Simulation{
                 .headers(headers_3)
                 .check(status.is(200))
         )
-        
+
         .exec(http("Logout basic user")
                 .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/logout")
         )
 
         .exec(http("Second unauthenticated request")
                 .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/auth")
-                .queryParam("redirect_uri", "http://localhost:8080/auth/load-testing/users")
-                .queryParam("client_id", "account")
+                .queryParam("redirect_uri", "http://localhost:8080/auth/admin/load-testing/console/#/realms/load-testing/users")
+                .queryParam("client_id", "security-admin-console")
                 .queryParam("response_type", "code id_token token")
                 .queryParam("response_mode", "fragment")
                 .queryParam("scope", "openid")

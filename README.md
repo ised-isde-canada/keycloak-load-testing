@@ -20,6 +20,24 @@ _NOTE: This version of sbt requires JDK8 or JDK11 to be installed in order to ex
 
 ## Running this test scenario
 
+_NOTE: The following steps are required in order to run this utility on a governement workstation._
+
+- Open the `sbtconfig.txt` file located in the `Program Files (x86)/sbt/conf` folder.
+
+- Append the following at the end of the file by replacing the [Proxy Host] and [Proxy Port] with the address and port number found in your manual proxy setup.
+
+```
+-Dsbt.log.format=true
+
+-Dhttp.proxyHost=[Proxy Host]
+
+-Dhttp.proxyPort=[Proxy Port]
+
+-Dhttps.proxyHost=[Proxy Host]
+
+-Dhttps.proxyPort=[Proxy Port]
+```
+
 - Boot up keycloak server.
   Steps to this can be found in the [keycloak installation guide](https://www.keycloak.org/docs/4.8/getting_started/index.html#_install-boot).
 
