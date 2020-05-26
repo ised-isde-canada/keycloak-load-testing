@@ -49,9 +49,9 @@ _NOTE: The following steps are required in order to run this utility on your ISE
 
 - Create your realm admin user with username `realm-admin` and password `password` and assign them the role of `security-admin-console`
 
-- Modify the client setting for `account` and `security-admin-console` so the **access type** is _public_ and set **Implicit Flow Enabled** to **true** for both clients. _Note: these realm setting changes were made in order to make this basic scala utility test case work. More infromation on this needs to be gathered. For now it seems that keeping the access type to confidential requires an access token to be collected and used post login._
+- Modify the client setting for `account` and `security-admin-console` so the **access type** is **public** and set **Implicit Flow Enabled** to **true** for both clients. _Note: these realm setting changes were made in order to make this basic scala utility test case work. More infromation on this needs to be gathered. For now it seems that keeping the access type to confidential requires an access token to be collected and used post login._
 
-- In the _Manage > Events Config tab_, set the _Save Events_ value to _true_.
+- In the **Manage > Events Config tab**, set the **Save Events** value to **true**.
 
 ## Executing this Test Scenario
 
