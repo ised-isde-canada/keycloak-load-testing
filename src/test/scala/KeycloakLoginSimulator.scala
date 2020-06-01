@@ -11,7 +11,7 @@ import java.util.UUID
 class KeycloakLoginSimulator extends Simulation{
 
     // Number of login requests to simulate on execution
-    val numberOfLogins = 20
+    val numberOfLogins = 2
 
     /***
         For debugging purposes, the following should be uncommented only when needed so as not to flood command line.
@@ -31,7 +31,7 @@ class KeycloakLoginSimulator extends Simulation{
                     can be defined at this point can be found in the official 
                     gatling http_protocol docs at [https://gatling.io/docs/current/http/http_protocol/]
     **/
-    val httpConfig = http.baseUrl("http://localhost:8080")
+    val httpConfig = http.baseUrl(System.getenv("LOCAL_HOST"))
     .acceptEncodingHeader("gzip, deflate")
 		.acceptLanguageHeader("pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6")
 		.doNotTrackHeader("1")
@@ -102,7 +102,7 @@ class KeycloakLoginSimulator extends Simulation{
 
         .exec(http("Second unauthenticated request")
                 .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/auth")
-                .queryParam("redirect_uri", "http://localhost:8080/auth/admin/load-testing/console/#/realms/load-testing/users")
+                .queryParam("redirect_uri", System.getenv("ADMIN_EP"))
                 .queryParam("client_id", "security-admin-console")
                 .queryParam("response_type", "code id_token token")
                 .queryParam("response_mode", "fragment")

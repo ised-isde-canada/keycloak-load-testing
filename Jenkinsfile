@@ -17,12 +17,19 @@ pipeline {
     stages {
     	stage('build') {
 			steps {
-				//script{
-	    			
-				//}
-
-				//add your build steps here
+				echo "Compiling project"
+				sh '''
+					sbt compile
+				'''
 			}
     	}
+		stage("Testing"){
+			steps{
+				echo "Running keycloak load test"
+				sh '''
+					sbt gatling:test
+				'''
+			}
+		}
     }
 }
