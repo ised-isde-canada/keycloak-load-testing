@@ -8,6 +8,3 @@ scalacOptions := Seq(
 
 libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "3.3.1" % "test,it"
 libraryDependencies += "io.gatling"            % "gatling-test-framework"    % "3.3.1" % "test,it"
-
-envVars in Test := Map("LOCAL_HOST" -> "http://localhost:8080",
-  "ADMIN_EP" -> "http://localhost:8080/auth/admin/load-testing/console/#/realms/load-testing/users")
