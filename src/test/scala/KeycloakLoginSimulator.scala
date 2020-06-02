@@ -13,6 +13,9 @@ class KeycloakLoginSimulator extends Simulation{
     // Number of login requests to simulate on execution
     val numberOfLogins = 2
 
+    // TESTING ACCESS TO SYSTEM VARIABLES
+    val keycloakServer = System.getenv("LOCAL_HOST")
+
     /***
         For debugging purposes, the following should be uncommented only when needed so as not to flood command line.
 
@@ -31,7 +34,7 @@ class KeycloakLoginSimulator extends Simulation{
                     can be defined at this point can be found in the official 
                     gatling http_protocol docs at [https://gatling.io/docs/current/http/http_protocol/]
     **/
-    val httpConfig = http.baseUrl(System.getenv("LOCAL_HOST"))
+    val httpConfig = http.baseUrl(keycloakServer)
     .acceptEncodingHeader("gzip, deflate")
 		.acceptLanguageHeader("pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6")
 		.doNotTrackHeader("1")
@@ -55,7 +58,7 @@ class KeycloakLoginSimulator extends Simulation{
 
     val headers_3 = Map(
 		"Accept" -> "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-		"Origin" -> "http://localhost:8080",
+		"Origin" -> keycloakServer,
 		"Upgrade-Insecure-Requests" -> "1",
 		"Accept-Encoding" -> "gzip, deflate, br",
 		"Accept-Language" -> "pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6",
@@ -66,8 +69,8 @@ class KeycloakLoginSimulator extends Simulation{
 
     val scn = scenario("Testing the realm connection for test user")
         .exec(http("First unauthenticated request")
-        .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/auth")
-        .queryParam("redirect_uri", "http://localhost:8080/auth/realms/load-testing/")
+        .get(keycloakServer + "/auth/realms/load-testing/protocol/openid-connect/auth")
+        .queryParam("redirect_uri", keycloakServer + "/auth/realms/load-testing/")
         .queryParam("client_id", "account")
         .queryParam("response_type", "code id_token token")
         .queryParam("response_mode", "fragment")
@@ -91,18 +94,18 @@ class KeycloakLoginSimulator extends Simulation{
 		)
         .exec(http("Page after login")
                 .get("${nextPage}")
-                .queryParam("redirect_uri", "http://localhost:8080/auth/realms/load-testing/account/login-redirect")
+                .queryParam("redirect_uri", keycloakServer + "/auth/realms/load-testing/account/login-redirect")
                 .headers(headers_3)
                 .check(status.is(200))
         )
 
         .exec(http("Logout basic user")
-                .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/logout")
+                .get(keycloakServer + "/auth/realms/load-testing/protocol/openid-connect/logout")
         )
 
         .exec(http("Second unauthenticated request")
-                .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/auth")
-                .queryParam("redirect_uri", System.getenv("ADMIN_EP"))
+                .get(keycloakServer + "/auth/realms/load-testing/protocol/openid-connect/auth")
+                .queryParam("redirect_uri", keycloakServer + "/auth/admin/load-testing/console/#/realms/load-testing/users")
                 .queryParam("client_id", "security-admin-console")
                 .queryParam("response_type", "code id_token token")
                 .queryParam("response_mode", "fragment")
@@ -128,7 +131,7 @@ class KeycloakLoginSimulator extends Simulation{
         )
         
         .exec(http("Logout realm admin")
-                .get("http://localhost:8080/auth/realms/load-testing/protocol/openid-connect/logout")
+                .get(keycloakServer + "/auth/realms/load-testing/protocol/openid-connect/logout")
         )
         
     /**
