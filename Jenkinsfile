@@ -18,17 +18,17 @@ pipeline {
     	stage('build') {
 			steps {
 				echo "Compiling project"
-				sh '''
-					sbt compile
-				'''
+				// sh '''
+				// 	sbt compile
+				// '''
 			}
     	}
 		stage("Testing"){
 			steps{
 				echo "Running keycloak load test"
-				sh '''
-					sbt gatling:test
-				'''
+				// sh '''
+				// 	sbt gatling:test
+				// '''
 			}
 		}
     }
