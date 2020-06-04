@@ -17,19 +17,13 @@ pipeline {
     stages {
     	stage('build') {
 			steps {
-				echo "Compiling project"
-				// sh '''
-				// 	sbt compile
-				// '''
+				echo "Building image from dockerfile"
+				dir("${WORKSPACE}")
+				script{
+					build.buildApp("idm-keycloak-load-testing")
+				}
 			}
     	}
-		stage("Testing"){
-			steps{
-				echo "Running keycloak load test"
-				// sh '''
-				// 	sbt gatling:test
-				// '''
-			}
-		}
+		
     }
 }
