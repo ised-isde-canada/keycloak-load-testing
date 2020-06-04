@@ -18,11 +18,11 @@ pipeline {
     	stage('Compiling') {
 			steps {
 				echo "Compiling and building scala code"
-				sh '''
+				sh """
 					sbt compile
 					sbt dist
 					cp ${WORKSPACE}/target/universal/idm-keycloak-load-testing-1.0-SNAPSHOT.zip ${WORKSPACE}/idm-keycloak-load-testing-1.0-SNAPSHOT.zip 
-				'''
+				"""
 			}
     	}
 		
