@@ -15,14 +15,14 @@ pipeline {
     }
   
     stages {
-    	stage('build') {
+    	stage('Compiling') {
 			steps {
-				echo "Building image from dockerfile"
-
-				echo "${WORKSPACE}"
-				script{
-					build.buildApp("idm-keycloak-load-testing")
-				}
+				echo "Compiling and building scala code"
+				sh '''
+					sbt compile
+					sbt dist
+					cp ${WORKSPACE}/target/universal/idm-keycloak-load-testing-1.0-SNAPSHOT.zip ${WORKSPACE}/idm-keycloak-load-testing-1.0-SNAPSHOT.zip 
+				'''
 			}
     	}
 		
