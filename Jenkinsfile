@@ -19,6 +19,7 @@ pipeline {
 			steps {
 				echo "Building image from dockerfile"
 				dir("${WORKSPACE}")
+				'''ls'''
 				script{
 					build.buildApp("idm-keycloak-load-testing")
 				}
