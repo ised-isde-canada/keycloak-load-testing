@@ -60,3 +60,11 @@ _NOTE: The following steps are required in order to run this utility on your ISE
 
 - Once the sbt interactive build tool has started up run the command `gatling:test`.
   This should run every test case scenarios defined in a scala file located at `/src/test`.
+
+## Docker
+
+To build the image run `docker build --tag keyckloak_simulation:v1 .` on terminal.
+
+To run the image you named as `keycloak_simulation:v1` run the following command on terminal: `docker run keycloak_simulation:v1`.
+
+_NOTE:_ The execution of the test should fail since the environment variable for the localhost is not set.
