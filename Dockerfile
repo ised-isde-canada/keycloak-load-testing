@@ -21,4 +21,4 @@ EXPOSE 8080
 
 USER runner
 
-ENTRYPOINT [ "/home/runner/artifacts/bin/" ]
+ENTRYPOINT [ "/home/runner/artifacts/bin" ]
