@@ -9,8 +9,8 @@ RUN addgroup -S -g 10000 runner
 RUN adduser -S -u 10000 -h $HOME -G runner runner
 
 COPY target/universal/keycloak-load-testing-1.0-SNAPSHOT.zip /home/runner/keycloak-load-testing-1.0-SNAPSHOT.zip
-RUN ["/usr/bin/unzip", "/home/runner/keycloak-load-testing-1.0-SNAPSHOT.zip"]
-RUN ["mv", "/home/runner/keycloak-load-testing-1.0-SNAPSHOT.zip", "/home/runner/artifacts"]
+RUN ["/usr/bin/unzip", "/home/runner/idm-keycloak-load-testing-1.0-SNAPSHOT.zip"]
+RUN ["mv", "/home/runner/idm-keycloak-load-testing-1.0-SNAPSHOT.zip", "/home/runner/artifacts"]
 
 RUN chmod g+w /ect/passwd
 RUN chgrp -Rf root /home/runner && chmod -Rf g+w /home/runner
@@ -20,4 +20,4 @@ EXPOSE 8080
 
 USER runner
 
-ENTRYPOINT [ "/home/runner/artifacts/bin/keycloak-load-testing" ]
+ENTRYPOINT [ "/home/runner/artifacts/bin/idm-keycloak-load-testing" ]
