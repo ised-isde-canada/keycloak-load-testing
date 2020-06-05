@@ -13,8 +13,8 @@ COPY /target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/r
 RUN ["/usr/bin/unzip", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip"]
 RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip", "/home/runner/artifacts"]
 
-RUN chmod g+w /etc/passwd
-RUN chgrp -Rf root /home/runner && chmod -Rf g+w /home/runner
+RUN chmod g=w /etc/passwd
+RUN chgrp -R 0 root /home/runner && chmod -R g=w /home/runner
 ENV RUNNER_USER runner
 
 EXPOSE 8080
