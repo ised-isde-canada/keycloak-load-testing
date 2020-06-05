@@ -21,13 +21,13 @@ pipeline {
 				sh """
 					sbt compile
 					sbt dist
-					cp ${WORKSPACE}/keycloak-load-testing/target/universal/idm-keycloak-load-testing-1.0-SNAPSHOT.zip ${WORKSPACE}/keycloak-load-testing/idm-keycloak-load-testing-1.0-SNAPSHOT.zip 
+					cp ${WORKSPACE}/target/universal/idm-keycloak-load-testing-1.0-SNAPSHOT.zip ${WORKSPACE}/idm-keycloak-load-testing-1.0-SNAPSHOT.zip 
 				"""
 			}
     	}
 		stage('Build images'){
 			steps{
-				dir("${WORKSPACE}/keycloak-load-testing"){
+				dir("${WORKSPACE}"){
 					script{
 						builder.buildApp(IMAGE_NAME)
 					}
