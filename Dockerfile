@@ -6,7 +6,7 @@ ENV HOME /home/runner
 WORKDIR /home/runner
 
 RUN addgroup -system -gid 10000 runner
-RUN adduser -System -uid 10000 -home $HOME -gid runner runner
+RUN adduser -System -uid 10000 -home $HOME -gid 10000 runner
 
 COPY target/universal/keycloak-load-testing-1.0-SNAPSHOT.zip /home/runner/keycloak-load-testing-1.0-SNAPSHOT.zip
 RUN ["/usr/bin/unzip", "/home/runner/idm-keycloak-load-testing-1.0-SNAPSHOT.zip"]
