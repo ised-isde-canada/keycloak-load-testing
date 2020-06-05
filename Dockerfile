@@ -19,7 +19,7 @@ RUN chmod g=u /etc/passwd
 
 RUN chgrp -R 0 /home/runner && chmod -R g=u /home/runner
 
-RUN ls artifacts/bin
+RUN ls 
 
 # USER runner
 
@@ -27,4 +27,4 @@ EXPOSE 8080
 
 
 
-ENTRYPOINT [ "artifacts/bin/idm_keycloak-load-testing_master-1.0-SNAPSHOT" ]
+ENTRYPOINT [ "idm_keycloak-load-testing_master-1.0-SNAPSHOT" ]
