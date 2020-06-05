@@ -19,7 +19,7 @@ COPY /target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/r
 RUN ["/usr/bin/unzip", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip"]
 RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip", "/home/runner/artifacts"]
 
-RUN ls artifacts
+RUN ls /artifacts
 
 # USER runner
 
