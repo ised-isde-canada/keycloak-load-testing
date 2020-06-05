@@ -15,6 +15,7 @@ RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip", "/h
 
 RUN chmod g=w /etc/passwd
 RUN chgrp -R 0 /home/runner && chmod -R g=w /home/runner
+RUN ls -la
 ENV RUNNER_USER runner
 
 EXPOSE 8080
