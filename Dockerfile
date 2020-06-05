@@ -15,8 +15,8 @@ RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip", "/h
 
 USER root
 
-RUN chmod g=w /etc/passwd
-RUN chgrp -R 10000 /home/runner && chmod -R g=w /home/runner
+RUN chmod g=u /etc/passwd
+RUN chgrp -R 10000 /home/runner && chmod -R g=u /home/runner
 RUN ls -la
 
 USER runner
