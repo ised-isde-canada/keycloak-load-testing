@@ -19,7 +19,7 @@ RUN chmod g=u /etc/passwd
 
 RUN chgrp -R 0 /home/runner && chmod -R g=u /home/runner
 
-RUN ls /home/runner/artifacts/bin
+RUN ls artifacts/bin
 
 # USER runner
 
