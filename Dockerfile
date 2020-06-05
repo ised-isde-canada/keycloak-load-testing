@@ -8,18 +8,18 @@ WORKDIR /home/runner
 RUN addgroup -system -gid 10000 runner
 RUN adduser -System -uid 10000 -home $HOME -gid 10000 runner
 
-#copying executables
-COPY /target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
-RUN ["/usr/bin/unzip", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip"]
-RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip", "/home/runner/artifacts"]
-
 USER root
 
 RUN chmod g=u /etc/passwd
 
 RUN chgrp -R 0 /home/runner && chmod -R g=u /home/runner
 
-RUN ls 
+#copying executables
+COPY /target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
+RUN ["/usr/bin/unzip", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip"]
+RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip", "/home/runner/artifacts"]
+
+RUN ls artifacts
 
 # USER runner
 
