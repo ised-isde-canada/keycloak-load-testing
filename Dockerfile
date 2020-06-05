@@ -21,4 +21,4 @@ EXPOSE 8080
 
 USER runner
 
-ENTRYPOINT [ "/home/runner/artifacts/bin/idm_keycloak-load-testing_master" ]
+ENTRYPOINT [ "/home/runner/artifacts/bin/" ]
