@@ -5,8 +5,8 @@ FROM hseeberger/scala-sbt:8u212_1.2.8_2.13.0
 ENV HOME /home/runner
 WORKDIR /home/runner
 
-RUN addgroup -S -g 10000 runner
-RUN adduser -S -u 10000 -h $HOME -G runner runner
+RUN addgroup -system -gid 10000 runner
+RUN adduser -System -uid 10000 -home $HOME -gid runner runner
 
 COPY target/universal/keycloak-load-testing-1.0-SNAPSHOT.zip /home/runner/keycloak-load-testing-1.0-SNAPSHOT.zip
 RUN ["/usr/bin/unzip", "/home/runner/idm-keycloak-load-testing-1.0-SNAPSHOT.zip"]
