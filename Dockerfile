@@ -3,7 +3,6 @@
 FROM hseeberger/scala-sbt:8u212_1.2.8_2.13.0
 
 ENV HOME /home/runner
-WORKDIR /home/runner
 
 RUN addgroup -system -gid 10000 runner
 RUN adduser -System -uid 10000 -home $HOME -gid 10000 runner
@@ -12,19 +11,18 @@ USER root
 
 RUN chmod g=u /etc/passwd
 
-RUN chgrp -R 0 /home/runner && chmod -R g=u /home/runner
+RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 
+WORKDIR /home/runner
 #copying executables
-COPY /target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
-RUN ["/usr/bin/unzip", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip"]
-RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip", "/home/runner/artifacts"]
-
-RUN ls /artifacts
+COPY /target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip $HOME/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
+RUN unzip idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
+RUN ls -la
+RUN mv idm_keycloak-load-testing_master-1.0-SNAPSHOT /artifacts
+RUN rm idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
 
 # USER runner
 
 EXPOSE 8080
-
-
 
 ENTRYPOINT [ "idm_keycloak-load-testing_master-1.0-SNAPSHOT" ]
