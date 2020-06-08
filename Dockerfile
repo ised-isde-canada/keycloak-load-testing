@@ -25,4 +25,5 @@ RUN unzip $ZIP_NAME && \
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/artifacts/idm_keycloak-load-testing_master-1.0-SNAPSHOT/lib/default.idm_keycloak-load-testing_master-1.0-SNAPSHOT.jar" ]
+#ENTRYPOINT [ "/artifacts/idm_keycloak-load-testing_master-1.0-SNAPSHOT/lib/default.idm_keycloak-load-testing_master-1.0-SNAPSHOT.jar" ]
+CMD ["bin/sh", "sbt gatling:test"]
