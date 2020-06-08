@@ -13,13 +13,13 @@ RUN chmod g=u /etc/passwd
 
 RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 
+ENV ZIP_NAME=idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
 WORKDIR /home/runner
 #copying executables
-COPY /target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip $HOME/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
-RUN unzip idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
-RUN ls -la
-RUN mv idm_keycloak-load-testing_master-1.0-SNAPSHOT /artifacts
-RUN rm idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
+COPY /target/universal/$ZIP_NAME $ZIP_NAME
+RUN unzip $ZIP_NAME && \
+    mv idm_keycloak-load-testing_master-1.0-SNAPSHOT /artifacts && \
+    rm $ZIP_NAME
 
 # USER runner
 
