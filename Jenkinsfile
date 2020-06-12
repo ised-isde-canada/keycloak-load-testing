@@ -15,21 +15,25 @@ pipeline {
     }
   
     stages {
-    	stage('build') {
+    	stage('Compiling') {
 			steps {
-				echo "Compiling project"
-				// sh '''
-				// 	sbt compile
-				// '''
+				echo "Compiling and building scala code"
+				sh """
+					sbt compile
+					sbt dist
+					cp ${WORKSPACE}/target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip ${WORKSPACE}/idm_keycloak-load-testing-1.0-SNAPSHOT.zip 
+				"""
 			}
     	}
-		stage("Testing"){
+		stage('Build images'){
 			steps{
-				echo "Running keycloak load test"
-				// sh '''
-				// 	sbt gatling:test
-				// '''
+				dir("${WORKSPACE}"){
+					script{
+						builder.buildApp(IMAGE_NAME)
+					}
+				}
 			}
 		}
+		
     }
 }
