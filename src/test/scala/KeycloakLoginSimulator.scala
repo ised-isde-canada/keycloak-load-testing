@@ -11,10 +11,11 @@ import java.util.UUID
 class KeycloakLoginSimulator extends Simulation{
 
     // Number of login requests to simulate on execution
-    val numberOfLogins = 2
+    val numberOfLogins = 250
 
     // TESTING ACCESS TO SYSTEM VARIABLES
-    val keycloakServer = System.getenv("LOCAL_HOST")
+    // val keycloakServer = System.getenv("LOCAL_HOST")
+    val keycloakServer = "https://sso-dev.ised-isde.canada.ca"
 
     /***
         For debugging purposes, the following should be uncommented only when needed so as not to flood command line.
@@ -28,14 +29,14 @@ class KeycloakLoginSimulator extends Simulation{
             - Loggin all failed HTTP requests made during simulation
             context.getLogger("io.gatling.http").setLevel(Level.valueOf("DEBUG"))
     ***/
-
     /** Keycloak server should be running on your local machine for this URL to be available
             NOTE:   This is the most basic definition for a scenario's baseUrl. Details on what attributes
                     can be defined at this point can be found in the official 
                     gatling http_protocol docs at [https://gatling.io/docs/current/http/http_protocol/]
     **/
-    val httpConfig = http.baseUrl(keycloakServer)
-    .acceptEncodingHeader("gzip, deflate")
+    val httpConfig = http.proxy(Proxy("cdhwg01.prod.prv", 80))
+        .baseUrl(keycloakServer)
+        .acceptEncodingHeader("gzip, deflate")
 		.acceptLanguageHeader("pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6")
 		.doNotTrackHeader("1")
 		.disableFollowRedirect
@@ -58,7 +59,7 @@ class KeycloakLoginSimulator extends Simulation{
 
     val headers_3 = Map(
 		"Accept" -> "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-		"Origin" -> keycloakServer,
+		"Origin" -> "https://sso-dev.ised-isde.canada.ca",
 		"Upgrade-Insecure-Requests" -> "1",
 		"Accept-Encoding" -> "gzip, deflate, br",
 		"Accept-Language" -> "pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6",
@@ -69,10 +70,10 @@ class KeycloakLoginSimulator extends Simulation{
 
     val scn = scenario("Testing the realm connection for test user")
         .exec(http("First unauthenticated request")
-        .get(keycloakServer + "/auth/realms/load-testing/protocol/openid-connect/auth")
-        .queryParam("redirect_uri", keycloakServer + "/auth/realms/load-testing/")
+        .get("https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/auth")
+        .queryParam("redirect_uri", "https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/login-redirect")
         .queryParam("client_id", "account")
-        .queryParam("response_type", "code id_token token")
+        .queryParam("response_type", "id_token token")
         .queryParam("response_mode", "fragment")
         .queryParam("scope", "openid")
         .queryParam("state",UUID.randomUUID().toString())
@@ -92,20 +93,14 @@ class KeycloakLoginSimulator extends Simulation{
 				.check(status.is(302))
                 .check(header("Location").saveAs("nextPage"))
 		)
-        .exec(http("Page after login")
-                .get("${nextPage}")
-                .queryParam("redirect_uri", keycloakServer + "/auth/realms/load-testing/account/login-redirect")
-                .headers(headers_3)
-                .check(status.is(200))
-        )
 
         .exec(http("Logout basic user")
-                .get(keycloakServer + "/auth/realms/load-testing/protocol/openid-connect/logout")
+                .get("https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/logout")
         )
 
         .exec(http("Second unauthenticated request")
-                .get(keycloakServer + "/auth/realms/load-testing/protocol/openid-connect/auth")
-                .queryParam("redirect_uri", keycloakServer + "/auth/admin/load-testing/console/#/realms/load-testing/users")
+                .get("https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/auth")
+                .queryParam("redirect_uri", "https://sso-dev.ised-isde.canada.ca/auth/admin/master/console/#/realms/load-testing/users")
                 .queryParam("client_id", "security-admin-console")
                 .queryParam("response_type", "code id_token token")
                 .queryParam("response_mode", "fragment")
@@ -129,9 +124,9 @@ class KeycloakLoginSimulator extends Simulation{
                 .check(header("Location").saveAs("nextPage"))
 
         )
-        
+
         .exec(http("Logout realm admin")
-                .get(keycloakServer + "/auth/realms/load-testing/protocol/openid-connect/logout")
+                .get("https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/logout")
         )
         
     /**
