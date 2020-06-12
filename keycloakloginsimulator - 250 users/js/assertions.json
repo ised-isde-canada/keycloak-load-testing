@@ -1,0 +1,10 @@
+{
+  "simulation": "KeycloakLoginSimulator",
+  "simulationId": "keycloakloginsimulator",
+  "start": 1591938312879,
+  "description": "",
+  "scenarios": ["Users"],
+  "assertions": [
+
+  ]
+}
