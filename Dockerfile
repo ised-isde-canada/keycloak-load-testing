@@ -25,6 +25,8 @@ COPY . .
 
 EXPOSE 8080
 
+WORKDIR /home/runner/target/scala-2.12
+
 # CMD scala idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 
 ENTRYPOINT [ "scala", "idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
