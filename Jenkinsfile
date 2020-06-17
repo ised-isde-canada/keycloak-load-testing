@@ -11,7 +11,7 @@ pipeline {
   
    	environment {
 		// GLobal Vars
-		IMAGE_NAME = "IDM-keycloak-load-testing"
+		IMAGE_NAME = "idm-keycloak-load-testing"
     }
   
     stages {
