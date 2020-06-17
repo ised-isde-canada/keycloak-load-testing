@@ -16,7 +16,7 @@ RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 WORKDIR /home/runner
 #copying executables
-RUN ls -la
+
 COPY /$JAR_NAME $JAR_NAME
 
 # USER runner
