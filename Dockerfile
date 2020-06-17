@@ -23,5 +23,5 @@ COPY /$JAR_NAME $JAR_NAME
 
 EXPOSE 8080
 
-ENTRYPOINT ["scala", "idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar"]
 
