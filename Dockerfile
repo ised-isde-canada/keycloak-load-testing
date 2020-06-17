@@ -13,7 +13,7 @@ RUN chmod g=u /etc/passwd
 
 RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 
-ENV JAR_NAME=keycloak-load-testing_2.12-1.0-SNAPSHOT.jar
+ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 WORKDIR /home/runner
 #copying executables
 COPY /target/$JAR_NAME $JAR_NAME
@@ -22,5 +22,5 @@ COPY /target/$JAR_NAME $JAR_NAME
 
 EXPOSE 8080
 
-ENTRYPOINT ["scala", "keycloak-load-testing_2.12-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["scala", "idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar"]
 
