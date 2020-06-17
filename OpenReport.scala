@@ -3,6 +3,7 @@ import java.io.File
 import java.util
 import java.awt.Desktop
 import java.util.Arrays
+import scala.sys.process._
 
 object OpenReport{
     def getListOfFiles(dir: String):List[File] = {
@@ -23,7 +24,14 @@ object OpenReport{
         }
     }
 
+    def runLoadTest() = {
+        "sbt gatling:test".!
+    }
+
     def main(args: Array[String]){
+
+        runLoadTest()
+
         // get current directory
         val currentDirectory = new java.io.File("./target/gatling/").getCanonicalPath()
 
