@@ -11,7 +11,7 @@ pipeline {
   
    	environment {
 		// GLobal Vars
-		IMAGE_NAME = "idm-keycloak-load-testing"
+		IMAGE_NAME = "idm-kc-loadtest"
     }
   
     stages {
@@ -20,8 +20,8 @@ pipeline {
 				echo "Compiling and building scala code"
 				sh """
 					sbt compile
-					sbt dist
-					cp ${WORKSPACE}/target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip ${WORKSPACE}/idm_keycloak-load-testing-1.0-SNAPSHOT.zip 
+					sbt package
+					cp ${WORKSPACE}/target/idm-kc-loadtest_master-1.0-SNAPSHOT.jar ${WORKSPACE}/idm-kc-loadtest-1.0-SNAPSHOT.jar
 				"""
 			}
     	}
