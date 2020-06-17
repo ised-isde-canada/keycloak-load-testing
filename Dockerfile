@@ -13,17 +13,14 @@ RUN chmod g=u /etc/passwd
 
 RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 
-ENV ZIP_NAME=idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
+ENV JAR_NAME=idm-kc-loadtest_master-1.0-SNAPSHOT.jar
 WORKDIR /home/runner
 #copying executables
-COPY /target/universal/$ZIP_NAME $ZIP_NAME
-RUN unzip $ZIP_NAME && \
-    mv idm_keycloak-load-testing_master-1.0-SNAPSHOT /artifacts && \
-    rm $ZIP_NAME
+COPY /target/$JAR_NAME $JAR_NAME
 
 # USER runner
 
 EXPOSE 8080
 
-#ENTRYPOINT ["/artifacts/idm_keycloak-load-testing_master-1.0-SNAPSHOT/lib/default.keycloak-load-testing-1.0-SNAPSHOT" ]
+ENTRYPOINT ["scala", "idm-kc-loadtest_master-1.0-SNAPSHOT.jar"]
 
