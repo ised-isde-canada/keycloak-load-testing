@@ -21,6 +21,7 @@ pipeline {
 				sh """
 					sbt compile
 					sbt package
+					dir
 					cp ${WORKSPACE}/target/idm-kc-loadtest_master-1.0-SNAPSHOT.jar ${WORKSPACE}/idm-kc-loadtest-1.0-SNAPSHOT.jar
 				"""
 			}
