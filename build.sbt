@@ -1,6 +1,5 @@
-enablePlugins(GatlingPlugin)
 enablePlugins(JavaAppPackaging)
-enablePlugins(DockerPlugin)
+enablePlugins(GatlingPlugin)
 
 scalaVersion := "2.12.10"
 version := "1.0-SNAPSHOT"
