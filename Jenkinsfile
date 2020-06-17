@@ -22,7 +22,7 @@ pipeline {
 					sbt compile
 					sbt package
 					dir
-					cp ${WORKSPACE}/target/scala-2.12/IDM-keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar ${WORKSPACE}/IDM-keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
+					cp ${WORKSPACE}/target/scala-2.12/keycloak-load-testing_2.12-1.0-SNAPSHOT.jar ${WORKSPACE}/keycloak-load-testing_2.12-1.0-SNAPSHOT.jar
 				"""
 			}
     	}
