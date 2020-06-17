@@ -22,7 +22,7 @@ pipeline {
 					sbt compile
 					sbt package
 					dir
-					cp ${WORKSPACE}/target/idm-kc-loadtest_master-1.0-SNAPSHOT.jar ${WORKSPACE}/idm-kc-loadtest-1.0-SNAPSHOT.jar
+					cp ${WORKSPACE}/target/idm-kc-loadtest_master_2.12-1.0-SNAPSHOT.jar ${WORKSPACE}/idm-kc-loadtest_master_2.12-1.0-SNAPSHOT.jar
 				"""
 			}
     	}
