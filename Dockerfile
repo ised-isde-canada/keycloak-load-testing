@@ -2,9 +2,9 @@
 ## Base image containing bash, scala and sbt
 FROM hseeberger/scala-sbt:8u212_1.2.8_2.13.0
 
-CMD sbt
-
 ENV HOME /home/runner
+
+ADD run.sh .
 
 RUN addgroup -system -gid 10000 runner
 RUN adduser -System -uid 10000 -home $HOME -gid 10000 runner
@@ -19,15 +19,11 @@ ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 WORKDIR /home/runner
 #copying executables
 
-COPY . . 
-
 # USER runner
 
 EXPOSE 8080
 
-WORKDIR /home/runner/target/scala-2.12
-
 # CMD scala idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
-
-ENTRYPOINT [ "scala", "idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
+RUN ["chmod", "+x", "run.sh"]
+# ENTRYPOINT [ "scala", "target/scala-2.12/idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
 
