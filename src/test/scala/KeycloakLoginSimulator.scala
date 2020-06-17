@@ -11,11 +11,11 @@ import java.util.UUID
 class KeycloakLoginSimulator extends Simulation{
 
     // Number of login requests to simulate on execution
-    val numberOfLogins = 250
+    val numberOfLogins = 10
 
     // TESTING ACCESS TO SYSTEM VARIABLES
     // val keycloakServer = System.getenv("LOCAL_HOST")
-    val keycloakServer = "https://sso-dev.ised-isde.canada.ca"
+    val keycloakServer = "https://sso-demo.ised-isde.canada.ca"
 
     /***
         For debugging purposes, the following should be uncommented only when needed so as not to flood command line.
@@ -34,7 +34,8 @@ class KeycloakLoginSimulator extends Simulation{
                     can be defined at this point can be found in the official 
                     gatling http_protocol docs at [https://gatling.io/docs/current/http/http_protocol/]
     **/
-    val httpConfig = http.proxy(Proxy("cdhwg01.prod.prv", 80))
+    //.proxy(Proxy("cdhwg01.prod.prv", 80))
+    val httpConfig = http
         .baseUrl(keycloakServer)
         .acceptEncodingHeader("gzip, deflate")
 		.acceptLanguageHeader("pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6")
@@ -59,7 +60,7 @@ class KeycloakLoginSimulator extends Simulation{
 
     val headers_3 = Map(
 		"Accept" -> "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-		"Origin" -> "https://sso-dev.ised-isde.canada.ca",
+		"Origin" -> "https://sso-demo.ised-isde.canada.ca",
 		"Upgrade-Insecure-Requests" -> "1",
 		"Accept-Encoding" -> "gzip, deflate, br",
 		"Accept-Language" -> "pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6",
@@ -70,8 +71,8 @@ class KeycloakLoginSimulator extends Simulation{
 
     val scn = scenario("Testing the realm connection for test user")
         .exec(http("First unauthenticated request")
-        .get("https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/auth")
-        .queryParam("redirect_uri", "https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/login-redirect")
+        .get("https://sso-demo.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/auth")
+        .queryParam("redirect_uri", "https://sso-demo.ised-isde.canada.ca/auth/realms/load-testing/login-redirect")
         .queryParam("client_id", "account")
         .queryParam("response_type", "id_token token")
         .queryParam("response_mode", "fragment")
@@ -95,12 +96,12 @@ class KeycloakLoginSimulator extends Simulation{
 		)
 
         .exec(http("Logout basic user")
-                .get("https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/logout")
+                .get("https://sso-demo.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/logout")
         )
 
         .exec(http("Second unauthenticated request")
-                .get("https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/auth")
-                .queryParam("redirect_uri", "https://sso-dev.ised-isde.canada.ca/auth/admin/master/console/#/realms/load-testing/users")
+                .get("https://sso-demo.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/auth")
+                .queryParam("redirect_uri", "https://sso-demo.ised-isde.canada.ca/auth/admin/master/console/#/realms/load-testing/users")
                 .queryParam("client_id", "security-admin-console")
                 .queryParam("response_type", "code id_token token")
                 .queryParam("response_mode", "fragment")
@@ -126,7 +127,7 @@ class KeycloakLoginSimulator extends Simulation{
         )
 
         .exec(http("Logout realm admin")
-                .get("https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/logout")
+                .get("https://sso-demo.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/logout")
         )
         
     /**
