@@ -4,7 +4,7 @@ FROM hseeberger/scala-sbt:8u212_1.2.8_2.13.0
 
 ENV HOME /home/runner
 
-ADD run.sh .
+
 
 RUN addgroup -system -gid 10000 runner
 RUN adduser -System -uid 10000 -home $HOME -gid 10000 runner
@@ -18,6 +18,7 @@ RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 WORKDIR /home/runner
 #copying executables
+ADD run.sh .
 
 # USER runner
 RUN chmod +x run.sh
