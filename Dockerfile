@@ -1,6 +1,6 @@
 #FROM registry.apps.dev.openshift.ised-isde.canada.ca/ised-ci/<your-base-image>
 ## Base image containing bash, scala and sbt
-FROM adoptopenjdk/openjdk8
+FROM anapsix/alpine-java
 
 ENV HOME /home/runner
 WORKDIR /home/runner
