@@ -36,9 +36,9 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     wget https://piccolo.link/sbt-1.3.3.tgz && \
     tar -xzvf sbt-1.3.3.tgz && \
     mkdir "${SBT_HOME}" && \
-    rm "/tmp/sbt-${SBT_VERSION}}/bin/"*.bat && \
-    mv "/tmp/sbt-${SBT_VERSION}}/bin" "/tmp/sbt-${SBT_VERSION}}/lib" "${SBT_VERSION}}" && \
-    ln -s "${SBT_VERSION}}/bin/"* "/usr/bin/" && \
+    rm "/tmp/${SBT_HOME}/bin/"*.bat && \
+    mv "/tmp/${SBT_HOME}/bin" "/tmp/${SBT_HOME}/lib" "${SBT_HOME}" && \
+    ln -s "${SBT_HOME}/bin/"* "/usr/bin/" && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"* && \
     sbt sbtVersion
