@@ -31,8 +31,8 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"*
 
-RUN wget https://piccolo.link/sbt-${SBT_VERSION}.tgz && \
-    tar -xzvf sbt-${SBT_VERSION}.tgz && \
+RUN wget https://piccolo.link/sbt-1.3.3.tgz && \
+    tar -xzvf sbt-1.3.3.tgz && \
     sbt sbtVersion
 
 COPY . .
