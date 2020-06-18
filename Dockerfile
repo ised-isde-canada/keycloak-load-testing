@@ -31,15 +31,21 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"*
 
-RUN wget https://piccolo.link/sbt-1.3.3.tgz && \
+RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
+    cd "/tmp" && \
+    wget https://piccolo.link/sbt-1.3.3.tgz && \
     tar -xzvf sbt-1.3.3.tgz && \
+    mkdir "${SBT_HOME}" && \
+    rm "/tmp/sbt-${SBT_VERSION}}/bin/"*.bat && \
+    mv "/tmp/sbt-${SBT_VERSION}}/bin" "/tmp/sbt-${SBT_VERSION}}/lib" "${SBT_VERSION}}" && \
+    ln -s "${SBT_VERSION}}/bin/"* "/usr/bin/" && \
+    apk del .build-dependencies && \
+    rm -rf "/tmp/"* && \
     sbt sbtVersion
 
 COPY . .
 
 # ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
-
-CMD sbt
 
 # USER runner
 
