@@ -5,6 +5,8 @@ FROM anapsix/alpine-java
 ENV HOME /home/runner
 ENV SCALA_VERSION=2.12.10 
 ENV SCALA_HOME=/scala
+ENV SBT_HOME = /sbt
+ENV SBT_VERSION = 1.3.3
 
 WORKDIR /home/runner
 
@@ -29,11 +31,8 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"*
 
-RUN curl -L -o sbt-1.3.3.deb http://dl.bintray.com/sbt/debian/sbt-1.3.3.deb && \
-    dpkg -i sbt-1.3.3.deb && \
-    rm sbt-1.3.3.deb && \
-    apt-get update && \
-    apt-get install sbt && \
+RUN wget https://piccolo.link/sbt-$SBT_VERSION.tgz && \
+    tar -xzvf sbt-$SBT_VERSION.tgz && \
     sbt sbtVersion
 
 COPY . .
