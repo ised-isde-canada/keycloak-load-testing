@@ -17,7 +17,7 @@ RUN chmod g=u /etc/passwd
 
 RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 
-RUN dir /home/runner/usr
+RUN ls /home/runner/usr
 
 RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     apk add --no-cache bash curl jq && \
