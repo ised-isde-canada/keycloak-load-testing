@@ -24,10 +24,10 @@ RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 #     apt-get install sbt && \
 #     sbt sbtVersion
 
-RUN apt-get update && \  
-    curl -L -o scala-2.12.10.deb https://www.scala-lang.org/files/archive/scala-2.12.10.deb && \
+RUN curl -L -o scala-2.12.10.deb https://www.scala-lang.org/files/archive/scala-2.12.10.deb && \
     dpkg -i scala-2.12.10.deb && \
     rm scala-2.12.10.deb && \
+    apt-get update && \  
     apt-get install scala && \
     scala -version
 
