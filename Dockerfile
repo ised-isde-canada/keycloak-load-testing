@@ -33,7 +33,7 @@ COPY . .
 
 # ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 
-#copying executables
+CMD sbt
 
 # USER runner
 
