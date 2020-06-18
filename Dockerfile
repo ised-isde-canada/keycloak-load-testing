@@ -7,7 +7,7 @@ WORKDIR /home/runner
 
 COPY . .
 
-RUN addgroup -system -gid 10000 runner
+RUN addgroup -System -gid 10000 runner
 RUN adduser -System -uid 10000 -home $HOME -gid 10000 runner
 
 USER root
