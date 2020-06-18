@@ -1,6 +1,6 @@
 #FROM registry.apps.dev.openshift.ised-isde.canada.ca/ised-ci/<your-base-image>
 ## Base image containing bash, scala and sbt
-FROM hseeberger/scala-sbt:8u212_1.2.8_2.13.0
+FROM adoptopenjdk/openjdk8
 
 ENV HOME /home/runner
 
@@ -9,19 +9,21 @@ RUN adduser -System -uid 10000 -home $HOME -gid 10000 runner
 
 USER root
 
-RUN ls -la
-
-COPY /run.sh .
-
 RUN chmod g=u /etc/passwd
 
 RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 
+# Install sbt
+RUN curl -L -o sbt-1.3.3.deb http://dl.bintray.com/sbt/debian/sbt-1.3.3.deb && \
+    dpkg -i sbt-1.3.3.deb && \
+    rm sbt-1.3.3.deb && \
+    apt-get update && \
+    apt-get install sbt && \
+    sbt sbtVersion
+
 ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 WORKDIR /home/runner
 #copying executables
-
-RUN ls -la
 
 # USER runner
 RUN chmod +x run.sh
