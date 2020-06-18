@@ -17,8 +17,6 @@ RUN chmod g=u /etc/passwd
 
 RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 
-RUN ls /home/runner
-
 RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     apk add --no-cache bash curl jq && \
     cd "/tmp" && \
@@ -31,18 +29,7 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"*
 
-# COPY . .
-
-# Install sbt & scala
-
-# RUN apk update && \
-#     apk add dpkg && \
-#     apk add curl && \
-#     curl -L -o scala-2.12.10.deb https://www.scala-lang.org/files/archive/scala-2.12.10.deb && \
-#     dpkg -i scala-2.12.10.deb && \
-#     rm scala-2.12.10.deb && \
-#     scala -version
-
+COPY . .
 
 # ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 
@@ -54,4 +41,4 @@ EXPOSE 8080
 
 # CMD scala idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 
-# ENTRYPOINT [ "scala", "target/scala-2.12/idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
+ENTRYPOINT [ "scala", "target/scala-2.12/idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
