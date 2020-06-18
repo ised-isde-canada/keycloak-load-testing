@@ -3,6 +3,7 @@
 FROM adoptopenjdk/openjdk8
 
 ENV HOME /home/runner
+WORKDIR /home/runner
 
 RUN addgroup -system -gid 10000 runner
 RUN adduser -System -uid 10000 -home $HOME -gid 10000 runner
@@ -22,7 +23,7 @@ RUN curl -L -o sbt-1.3.3.deb http://dl.bintray.com/sbt/debian/sbt-1.3.3.deb && \
     sbt sbtVersion
 
 ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
-WORKDIR /home/runner
+
 #copying executables
 
 # USER runner
