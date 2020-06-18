@@ -26,11 +26,9 @@ WORKDIR /home/runner
 #copying executables
 
 # USER runner
-RUN chmod +x run.sh
 
 EXPOSE 8080
 
 # CMD scala idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
-RUN ["sh", "run.sh"]
-# ENTRYPOINT [ "scala", "target/scala-2.12/idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
 
+ENTRYPOINT [ "scala", "target/scala-2.12idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
