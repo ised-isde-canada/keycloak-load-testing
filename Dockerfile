@@ -27,6 +27,8 @@ RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 RUN    curl -L -o scala-2.12.10.deb https://www.scala-lang.org/files/archive/scala-2.12.10.deb && \
     dpkg -i scala-2.12.10.deb && \
     rm scala-2.12.10.deb && \
+    apt-get update && \
+    apt-get install scala && \
     scala -version
 
 ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
