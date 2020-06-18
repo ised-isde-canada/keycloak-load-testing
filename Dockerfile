@@ -17,13 +17,14 @@ RUN chmod g=u /etc/passwd
 RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 
 # Install sbt & scala
-RUN curl -L -o sbt-1.3.3.deb http://dl.bintray.com/sbt/debian/sbt-1.3.3.deb && \
-    dpkg -i sbt-1.3.3.deb && \
-    rm sbt-1.3.3.deb && \
-    apt-get update && \
-    apt-get install sbt && \
-    sbt sbtVersion \
-    curl -L -o scala-2.12.10.deb https://www.scala-lang.org/files/archive/scala-2.12.10.deb && \
+# RUN curl -L -o sbt-1.3.3.deb http://dl.bintray.com/sbt/debian/sbt-1.3.3.deb && \
+#     dpkg -i sbt-1.3.3.deb && \
+#     rm sbt-1.3.3.deb && \
+#     apt-get update && \
+#     apt-get install sbt && \
+#     sbt sbtVersion
+
+RUN    curl -L -o scala-2.12.10.deb https://www.scala-lang.org/files/archive/scala-2.12.10.deb && \
     dpkg -i scala-2.12.10 && \
     rm scala-2.12.10 && \
     scala -version
