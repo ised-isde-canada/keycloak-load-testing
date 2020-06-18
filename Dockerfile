@@ -29,6 +29,13 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"*
 
+RUN curl -L -o sbt-1.3.3.deb http://dl.bintray.com/sbt/debian/sbt-1.3.3.deb && \
+    dpkg -i sbt-1.3.3.deb && \
+    rm sbt-1.3.3.deb && \
+    apt-get update && \
+    apt-get install sbt && \
+    sbt sbtVersion
+
 COPY . .
 
 # ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
