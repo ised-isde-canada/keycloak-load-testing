@@ -31,7 +31,8 @@ RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 #     apt-get install scala && \
 #     scala -version
 
-RUN apt-get install && \
+RUN apk update && \
+    apk install && \
     wget https://www.scala-lang.org/files/archive/scala-2.12.10.deb && \
     dpkg -i scala-2.12.10.deb && \
     rm scala-2.12.10.deb && \
