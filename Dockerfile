@@ -9,7 +9,7 @@ RUN adduser -System -uid 10000 -home $HOME -gid 10000 runner
 
 USER root
 
-RUN dir
+RUN ls -la
 
 COPY /run.sh .
 
@@ -21,7 +21,7 @@ ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 WORKDIR /home/runner
 #copying executables
 
-RUN dir
+RUN ls -la
 
 # USER runner
 RUN chmod +x run.sh
