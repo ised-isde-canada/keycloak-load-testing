@@ -32,7 +32,7 @@ RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
 #     scala -version
 
 RUN apk update && \
-    apk install && \
+    apk add && \
     wget https://www.scala-lang.org/files/archive/scala-2.12.10.deb && \
     dpkg -i scala-2.12.10.deb && \
     rm scala-2.12.10.deb && \
