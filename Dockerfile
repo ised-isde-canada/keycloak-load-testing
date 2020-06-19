@@ -41,7 +41,7 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     ln -s "${SBT_HOME}/bin/"* "/usr/bin/" && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"* && \
-    sbt -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2
+    java -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2
 
 RUN chmod g=u ${SBT_HOME} && chmod g=u ${SCALA_HOME}
 
