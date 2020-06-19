@@ -36,7 +36,7 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     mv "/tmp${SBT_HOME}/bin" "/tmp${SBT_HOME}/lib" "${SBT_HOME}" && \
     ln -s "${SBT_HOME}/bin/"* "/usr/bin/" && \
     apk del .build-dependencies && \
-    rm -rf "/tmp"*
+    rm -rf "/tmp/"*
 #chmod g=u ${SBT_HOME} && 
 
 RUN chmod g=u ${SCALA_HOME}
