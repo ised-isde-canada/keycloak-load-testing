@@ -42,6 +42,8 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"*
 
+RUN chmod g=u ${SBT_HOME} && chmos g=u ${SCALA_HOME}
+
 COPY . .
 
 # ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
