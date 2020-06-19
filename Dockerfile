@@ -40,11 +40,12 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     mv "/tmp/${SBT_HOME}/bin" "/tmp/${SBT_HOME}/lib" "${SBT_HOME}" && \
     ln -s "${SBT_HOME}/bin/"* "/usr/bin/" && \
     apk del .build-dependencies && \
-    rm -rf "/tmp/"*
+    rm -rf "/tmp/"* && \
+    sbt -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2
 
 RUN chmod g=u ${SBT_HOME} && chmod g=u ${SCALA_HOME}
 
-COPY . .
+COPY "target/scala-2.12/idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" "idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar"
 
 # ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 
@@ -54,4 +55,4 @@ EXPOSE 8080
 
 # CMD scala idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 
-ENTRYPOINT [ "scala", "target/scala-2.12/idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
+ENTRYPOINT [ "scala", "idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
