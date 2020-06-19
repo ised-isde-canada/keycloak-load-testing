@@ -27,17 +27,17 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"*
 
-# RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
-#     cd "/tmp" && \
-#     wget https://piccolo.link/sbt-1.3.3.tgz && \
-#     tar -xzvf sbt-1.3.3.tgz && \
-#     mkdir "${SBT_HOME}" && \
-#     rm "/tmp/${SBT_HOME}/bin/"*.bat && \
-#     mv "/tmp/${SBT_HOME}/bin" "/tmp/${SBT_HOME}/lib" "${SBT_HOME}" && \
-#     ln -s "${SBT_HOME}/bin/"* "/usr/bin/" && \
-#     apk del .build-dependencies && \
-#     rm -rf "/tmp/"* && \
-#     java -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2
+RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
+    cd "/tmp" && \
+    wget https://piccolo.link/sbt-1.3.3.tgz && \
+    tar -xzvf sbt-1.3.3.tgz && \
+    mkdir "${SBT_HOME}" && \
+    rm "/tmp/${SBT_HOME}/bin/"*.bat && \
+    mv "/tmp/${SBT_HOME}/bin" "/tmp/${SBT_HOME}/lib" "${SBT_HOME}" && \
+    ln -s "${SBT_HOME}/bin/"* "/usr/bin/" && \
+    apk del .build-dependencies && \
+    rm -rf "/tmp/"* && \
+    java -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2
 #chmod g=u ${SBT_HOME} && 
 
 RUN chmod g=u ${SCALA_HOME}
