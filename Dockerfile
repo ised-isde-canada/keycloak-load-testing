@@ -76,4 +76,4 @@ EXPOSE 8080
 
 USER runner
 
-ENTRYPOINT ["/home/runner/artifacts/bin/idm_keycloak-load-testing_master-1.0-SNAPSHOT"]
+ENTRYPOINT ["/home/runner/artifacts/bin/idm_keycloak-load-testing_master"]
