@@ -52,7 +52,7 @@ object Main extends App{
     // }
     
     def runLoadTest() = {
-        "sbt gatling:test".!
+        "sbt".!
     }
 }
 
