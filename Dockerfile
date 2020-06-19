@@ -62,7 +62,7 @@ WORKDIR /home/runner
 RUN addgroup -S -g 10000 runner
 RUN adduser -S -u 10000 -h $HOME -G runner runner
 
-COPY target/universal/idm-keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/runner/app.zip
+COPY target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/runner/app.zip
 
 RUN ["/usr/bin/unzip", "/home/runner/app.zip"]
 RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT", "/home/runner/artifacts"]
