@@ -25,7 +25,7 @@ pipeline {
 				sh '''
                     sbt compile
                     sbt dist
-                    cp ${WORKSPACE}/target/universal/idm-keycloak-load-testing_master-1.0-SNAPSHOT.zip ${WORKSPACE}/idm-keycloak-load-testing_master-1.0-SNAPSHOT.zip
+                    cp ${WORKSPACE}/target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip ${WORKSPACE}/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
                 '''
 			}
     	}
