@@ -41,7 +41,7 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
 
 RUN chmod g=u ${SCALA_HOME}
 
-COPY "target/scala-2.12/idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" "idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar"
+COPY . .
 
 RUN chmod g=u /etc/passwd
 
@@ -55,4 +55,4 @@ EXPOSE 8080
 
 # CMD scala idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
 
-ENTRYPOINT [ "scala", "idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
+ENTRYPOINT [ "scala", "target/scala-2.12/idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar"]
