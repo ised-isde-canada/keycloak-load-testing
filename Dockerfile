@@ -4,8 +4,8 @@ FROM anapsix/alpine-java
 
 ENV HOME /home/runner
 ENV SCALA_VERSION=2.12.10 
-ENV SCALA_HOME=/scala
-ENV SBT_HOME=/sbt
+ENV SCALA_HOME=/home/runner/scala
+ENV SBT_HOME=/home/runner/sbt
 ENV SBT_VERSION = 1.3.3
 
 WORKDIR /home/runner
