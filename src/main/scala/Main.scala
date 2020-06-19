@@ -48,11 +48,12 @@ object Main extends App{
     //         d.listFiles.filter(_.isDirectory).toList
     //     } else {
     //         List[File]()
-    //     }
+    //   
+    //-Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2  }
     // }
     
     def runLoadTest() = {
-        "sbt".!
+        "sbt gatling:test".!
     }
 }
 
