@@ -36,7 +36,7 @@
 
 # ENTRYPOINT ["/home/runner/artifacts/bin/idm_keycloak-load-testing_master"]
 
-FROM openshift3/jenkins-slave-base-rhel7
+FROM openshift3/jenkins-slave-base-centos7
 
 WORKDIR /home/runner
 
