@@ -63,8 +63,9 @@ USER root
 RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     wget https://piccolo.link/sbt-1.3.3.tgz && \
     tar -xzvf sbt-1.3.3.tgz && \
-    apk del .build-dependencies && \
-    sbt sbtVersion
+    apk del .build-dependencies
+
+RUN stb sbtVersion
 
 COPY . .
 
