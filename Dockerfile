@@ -38,6 +38,11 @@
 
 FROM anapsix/alpine-java
 
+RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
+    wget https://piccolo.link/sbt-1.3.3.tgz && \
+    tar -xzvf sbt-1.3.3.tgz && \
+    apk del .build-dependencies
+
 WORKDIR /home/runner
 
 ENV SBT_VERSION 1.3.3
@@ -60,10 +65,7 @@ USER root
 #     && yum install java-1.8.0-openjdk-headless.i686 \
 #     && yum clean all -y
 
-RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
-    wget https://piccolo.link/sbt-1.3.3.tgz && \
-    tar -xzvf sbt-1.3.3.tgz && \
-    apk del .build-dependencies
+
 
 COPY . .
 
