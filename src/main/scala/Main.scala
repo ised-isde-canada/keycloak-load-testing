@@ -33,24 +33,24 @@ object Main extends App{
     // // open report in computer's default browser
     // Desktop.getDesktop().browse(html.toURI())
 
-    // def getListOfFiles(dir: String):List[File] = {
-    //     val d = new File(dir)
-    //     if (d.exists && d.isDirectory) {
-    //         d.listFiles.filter(_.isFile).toList
-    //     } else {
-    //         List[File]()
-    //     }
-    // }
+    def getListOfFiles(dir: String):List[File] = {
+        val d = new File(dir)
+        if (d.exists && d.isDirectory) {
+            d.listFiles.filter(_.isFile).toList
+        } else {
+            List[File]()
+        }
+    }
 
-    // def getListOfFolders(dir: String):List[File] = {
-    //     val d = new File(dir)
-    //     if (d.exists && d.isDirectory) {
-    //         d.listFiles.filter(_.isDirectory).toList
-    //     } else {
-    //         List[File]()
-    //   
-    //-Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2  }
-    // }
+    def getListOfFolders(dir: String):List[File] = {
+        val d = new File(dir)
+        if (d.exists && d.isDirectory) {
+            d.listFiles.filter(_.isDirectory).toList
+        } else {
+            List[File]()
+      
+        }
+    }
     
     def runLoadTest() = {
         "sbt gatling:test".!
