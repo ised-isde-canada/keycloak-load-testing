@@ -1,35 +1,7 @@
-# #FROM registry.apps.dev.openshift.ised-isde.canada.ca/ised-ci/<your-base-image>
-# ## Base image containing bash, scala and sbt
 # FROM anapsix/alpine-java
 
-# ENV HOME /home/runner
-# ENV SCALA_VERSION=2.12.10 
-# ENV SCALA_HOME=/scala
 # ENV SBT_HOME=/sbt
 # ENV SBT_VERSION = 1.3.3
-
-# WORKDIR /home/runner
-
-# RUN addgroup -S -g 10000 runner
-# RUN adduser -S -u 10000 -h $HOME -G runner runner
-
-# USER root
-
-# RUN chmod g=u /etc/passwd
-
-# RUN chgrp -R 0 $HOME && chmod -R g=u $HOME
-
-# RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
-#     apk add --no-cache bash curl jq && \
-#     cd "/tmp" && \
-#     wget --no-verbose "https://downloads.typesafe.com/scala/${SCALA_VERSION}/scala-${SCALA_VERSION}.tgz" && \
-#     tar xzf "scala-${SCALA_VERSION}.tgz" && \
-#     mkdir "${SCALA_HOME}" && \
-#     rm "/tmp/scala-${SCALA_VERSION}/bin/"*.bat && \
-#     mv "/tmp/scala-${SCALA_VERSION}/bin" "/tmp/scala-${SCALA_VERSION}/lib" "${SCALA_HOME}" && \
-#     ln -s "${SCALA_HOME}/bin/"* "/usr/bin/" && \
-#     apk del .build-dependencies && \
-#     rm -rf "/tmp/"*
 
 # RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
 #     cd "/tmp" && \
@@ -42,42 +14,52 @@
 #     apk del .build-dependencies && \
 #     rm -rf "/tmp/"*
 
-# COPY . .
+# ENV HOME /home/runner
+# WORKDIR /home/runner
 
-# # ENV JAR_NAME=idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
+# RUN addgroup -S -g 10000 runner
+# RUN adduser -S -u 10000 -h $HOME -G runner runner
 
-# # USER runner
+# COPY target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/runner/app.zip
+
+# RUN ["/usr/bin/unzip", "/home/runner/app.zip"]
+# RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT", "/home/runner/artifacts"]
+
+# RUN chmod g+w /etc/passwd
+# RUN chgrp -Rf root /home/runner && chmod -Rf g+w /home/runner
+
+# ENV RUNNER_USER runner
 
 # EXPOSE 8080
 
-# # CMD scala idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar
+# USER runner
 
-# ENTRYPOINT [ "scala", "target/scala-2.12/idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar" ]
+# ENTRYPOINT ["/home/runner/artifacts/bin/idm_keycloak-load-testing_master"]
 
-FROM anapsix/alpine-java
+FROM openshift3/jenkins-slave-base-rhel7
 
-RUN export PATH="/usr/local/sbt/bin:$PATH"
-
-RUN apk update && apk add ca-certificates wget tar && mkdir -p "/usr/local/sbt" && wget -qO - --no-check-certificate "https://piccolo.link/sbt-1.3.3.tgz" | tar xz -C /usr/local/sbt --strip-components=1
-
-ENV HOME /home/runner
 WORKDIR /home/runner
 
-RUN addgroup -S -g 10000 runner
-RUN adduser -S -u 10000 -h $HOME -G runner runner
-
-COPY target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/runner/app.zip
-
-RUN ["/usr/bin/unzip", "/home/runner/app.zip"]
-RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT", "/home/runner/artifacts"]
+ENV SBT_VERSION 1.3.3
+ENV SCALA_VERSION 2.12.10
+ENV IVY_DIR=/var/cache/.ivy2
+ENV SBT_DIR=/var/cache/.sbt
 
 RUN chmod g+w /etc/passwd
 RUN chgrp -Rf root /home/runner && chmod -Rf g+w /home/runner
 
-ENV RUNNER_USER runner
+USER root
+
+RUN INSTALL_PKGS="sbt-$SBT_VERSION" \
+    && curl -s https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo \
+    && mv bintray-sbt-rpm.repo /etc/yum.repos.d/ \
+    && yum install -y --enablerepo=centosplus $INSTALL_PKGS \
+    && rpm -V $INSTALL_PKGS \
+    && yum install -y https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.rpm \
+    && yum clean all -y
+
+COPY . .
 
 EXPOSE 8080
 
-USER runner
-
-ENTRYPOINT ["/home/runner/artifacts/bin/idm_keycloak-load-testing_master"]
+RUN sbt sbtVersion
