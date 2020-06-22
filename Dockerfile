@@ -1,4 +1,4 @@
-# FROM anapsix/alpine-java
+FROM anapsix/alpine-java
 
 # ENV SBT_HOME=/sbt
 # ENV SBT_VERSION = 1.3.3
@@ -14,61 +14,25 @@
 #     apk del .build-dependencies && \
 #     rm -rf "/tmp/"*
 
-# ENV HOME /home/runner
-# WORKDIR /home/runner
-
-# RUN addgroup -S -g 10000 runner
-# RUN adduser -S -u 10000 -h $HOME -G runner runner
-
-# COPY target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/runner/app.zip
-
-# RUN ["/usr/bin/unzip", "/home/runner/app.zip"]
-# RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT", "/home/runner/artifacts"]
-
-# RUN chmod g+w /etc/passwd
-# RUN chgrp -Rf root /home/runner && chmod -Rf g+w /home/runner
-
-# ENV RUNNER_USER runner
-
-# EXPOSE 8080
-
-# USER runner
-
-# ENTRYPOINT ["/home/runner/artifacts/bin/idm_keycloak-load-testing_master"]
-
-FROM anapsix/alpine-java
-
-RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
-    wget https://piccolo.link/sbt-1.3.3.tgz && \
-    tar -xzvf sbt-1.3.3.tgz && \
-    apk del .build-dependencies
-
+ENV HOME /home/runner
 WORKDIR /home/runner
 
-ENV SBT_VERSION 1.3.3
-ENV SCALA_VERSION 2.12.10
-ENV IVY_DIR=/var/cache/.ivy2
-ENV SBT_DIR=/var/cache/.sbt
+RUN addgroup -S -g 10000 runner
+RUN adduser -S -u 10000 -h $HOME -G runner runner
+
+COPY target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip /home/runner/app.zip
+
+RUN ["/usr/bin/unzip", "/home/runner/app.zip"]
+RUN ["mv", "/home/runner/idm_keycloak-load-testing_master-1.0-SNAPSHOT", "/home/runner/artifacts"]
 
 RUN chmod g+w /etc/passwd
 RUN chgrp -Rf root /home/runner && chmod -Rf g+w /home/runner
 
-USER root
-
-# RUN apk add curl \
-#     && INSTALL_PKGS="sbt-$SBT_VERSION" \
-#     && curl -s https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo \
-#     && mv bintray-sbt-rpm.repo /etc/yum.repos.d/ \
-#     && yum install -y $INSTALL_PKGS \
-#     && rpm -V $INSTALL_PKGS \
-#     && yum install -y https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.rpm \
-#     && yum install java-1.8.0-openjdk-headless.i686 \
-#     && yum clean all -y
-
-
-
-COPY . .
+ENV RUNNER_USER runner
 
 EXPOSE 8080
 
-ENTRYPOINT ["scala", "target/scala-2.12/idm_keycloak-load-testing_master_2.12-1.0-SNAPSHOT.jar"]
+USER runner
+
+ENTRYPOINT ["/home/runner/artifacts/bin/idm_keycloak-load-testing_master"]
+
