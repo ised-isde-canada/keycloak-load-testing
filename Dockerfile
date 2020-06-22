@@ -56,7 +56,7 @@ RUN INSTALL_PKGS="sbt-$SBT_VERSION" \
     && yum install -y $INSTALL_PKGS \
     && rpm -V $INSTALL_PKGS \
     && yum install -y https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.rpm \
-    && yum install java-1.8.0-openjdk \
+    && yum list java-1.8.0-openjdk* \
     && yum clean all -y
 
 USER 1001
