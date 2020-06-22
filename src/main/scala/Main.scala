@@ -21,7 +21,7 @@ object Main extends App{
 
     //get most recent folder from list
     val recent = folders.sorted.last.getCanonicalPath()
-    // System.out.println("Folders :" + folders.sorted.last)
+    System.out.println("Folders :" + folders.sorted.last)
     
     // // get list of files from recent folder
     // val files = getListOfFiles(recent)
