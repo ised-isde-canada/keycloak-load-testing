@@ -50,7 +50,8 @@ RUN chgrp -Rf root /home/runner && chmod -Rf g+w /home/runner
 
 USER root
 
-RUN INSTALL_PKGS="sbt-$SBT_VERSION" \
+RUN apk add curl \
+    && INSTALL_PKGS="sbt-$SBT_VERSION" \
     && curl -s https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo \
     && mv bintray-sbt-rpm.repo /etc/yum.repos.d/ \
     && yum install -y $INSTALL_PKGS \
