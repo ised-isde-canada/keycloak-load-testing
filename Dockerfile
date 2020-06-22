@@ -58,6 +58,8 @@ RUN INSTALL_PKGS="sbt-$SBT_VERSION" \
     && yum install -y https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.rpm \
     && yum clean all -y
 
+USER 1001
+
 COPY . .
 
 EXPOSE 8080
