@@ -20,7 +20,9 @@ pipeline {
 				echo "Compiling and building scala code"
 				sh """
 					sbt compile
-					sbt package
+					sbt gatling:test
+					sbt dist
+					cp ${WORKSPACE}/target/universal/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip ${WORKSPACE}/idm_keycloak-load-testing_master-1.0-SNAPSHOT.zip
 				"""
 				// sh '''
                 //     sbt compile
