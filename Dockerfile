@@ -59,13 +59,12 @@ RUN INSTALL_PKGS="sbt-$SBT_VERSION" \
     && yum install java-1.8.0-openjdk-headless.i686 \
     && yum clean all -y
 
-# RUN yum install -y \
-#     java-1.8.0-openjdk-headless.x86_64 \
-#     java-1.8.0-openjdk-devel
+RUN yum install -y \
+    java-1.8.0-openjdk-headless.i686
 
-# ENV JAVA_HOME /usr/lib/jvm/java-1.8.0
+ENV JAVA_HOME /usr/lib/jvm/java-1.8.0
 
-RUN yum search jdk
+# RUN yum search jdk
 
 USER 1001
 
