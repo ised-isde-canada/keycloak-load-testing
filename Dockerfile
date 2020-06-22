@@ -65,8 +65,6 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     tar -xzvf sbt-1.3.3.tgz && \
     apk del .build-dependencies
 
-RUN ls -la /sbt
-
 COPY . .
 
 EXPOSE 8080
