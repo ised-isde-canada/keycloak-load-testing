@@ -36,7 +36,7 @@
 
 # ENTRYPOINT ["/home/runner/artifacts/bin/idm_keycloak-load-testing_master"]
 
-FROM openshift3/jenkins-slave-base-centos7
+FROM openshift3/jenkins-slave-base-rhel7
 
 WORKDIR /home/runner
 
@@ -53,7 +53,7 @@ USER root
 RUN INSTALL_PKGS="sbt-$SBT_VERSION" \
     && curl -s https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo \
     && mv bintray-sbt-rpm.repo /etc/yum.repos.d/ \
-    && yum install -y --enablerepo=centosplus $INSTALL_PKGS \
+    && yum install -y --enablerepo="centosplus" $INSTALL_PKGS \
     && rpm -V $INSTALL_PKGS \
     && yum install -y https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.rpm \
     && yum clean all -y
