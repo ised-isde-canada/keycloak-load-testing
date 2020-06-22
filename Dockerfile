@@ -50,18 +50,21 @@ RUN chgrp -Rf root /home/runner && chmod -Rf g+w /home/runner
 
 USER root
 
-RUN apk add curl \
-    && INSTALL_PKGS="sbt-$SBT_VERSION" \
-    && curl -s https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo \
-    && mv bintray-sbt-rpm.repo /etc/yum.repos.d/ \
-    && yum install -y $INSTALL_PKGS \
-    && rpm -V $INSTALL_PKGS \
-    && yum install -y https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.rpm \
-    && yum install java-1.8.0-openjdk-headless.i686 \
-    && yum clean all -y
+# RUN apk add curl \
+#     && INSTALL_PKGS="sbt-$SBT_VERSION" \
+#     && curl -s https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo \
+#     && mv bintray-sbt-rpm.repo /etc/yum.repos.d/ \
+#     && yum install -y $INSTALL_PKGS \
+#     && rpm -V $INSTALL_PKGS \
+#     && yum install -y https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.rpm \
+#     && yum install java-1.8.0-openjdk-headless.i686 \
+#     && yum clean all -y
 
-
-USER 1001
+RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
+    wget https://piccolo.link/sbt-1.3.3.tgz && \
+    tar -xzvf sbt-1.3.3.tgz && \
+    apk del .build-dependencies && \
+    sbt sbtVersion
 
 COPY . .
 
