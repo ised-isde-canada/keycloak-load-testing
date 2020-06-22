@@ -59,6 +59,8 @@ FROM anapsix/alpine-java
 ENV HOME /home/runner
 WORKDIR /home/runner
 
+RUN export PATH="/usr/local/sbt/bin:$PATH" &&  apk update && apk add ca-certificates wget tar && mkdir -p "/usr/local/sbt" && wget -qO - --no-check-certificate "https://cocl.us/sbt-1.3.3.tgz" | tar xz -C /usr/local/sbt --strip-components=1 && sbt sbtVersion
+
 RUN addgroup -S -g 10000 runner
 RUN adduser -S -u 10000 -h $HOME -G runner runner
 
