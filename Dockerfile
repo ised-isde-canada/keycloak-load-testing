@@ -28,8 +28,6 @@ RUN adduser -S -u 10000 -h $HOME -G runner runner
 
 ENV RUNNER_USER runner
 
-RUN sbt sbtVersion
-
 COPY . .
 
 RUN chmod g+w /etc/passwd
