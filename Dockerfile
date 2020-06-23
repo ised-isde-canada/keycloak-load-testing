@@ -39,7 +39,7 @@ RUN ls -la
 
 EXPOSE 8080
 
-USER runner
+# USER runner
 
 # ENTRYPOINT ["/home/runner/artifacts/bin/idm_keycloak-load-testing_master"]
 
