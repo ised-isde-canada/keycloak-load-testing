@@ -41,6 +41,8 @@ ENV RUNNER_USER runner
 
 COPY . .
 
+RUN sbt sbtVersion
+
 EXPOSE 8080
 
 USER runner
