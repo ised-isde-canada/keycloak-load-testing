@@ -11,7 +11,7 @@ RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
     mv "/tmp/${SBT_HOME}/bin" "/tmp/${SBT_HOME}/lib" "${SBT_HOME}" && \
     ln -s "${SBT_HOME}/bin/"* "/usr/bin/" && \
     apk del .build-dependencies && \
-    rm -rf "/tmp/"*
+    rm -rf "/tmp/${SBT_HOME}/bin"*
 
 ENV HOME /home/runner
 WORKDIR /home/runner
