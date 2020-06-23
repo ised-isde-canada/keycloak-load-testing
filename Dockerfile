@@ -1,18 +1,18 @@
 FROM anapsix/alpine-java
 
-# ENV SBT_HOME=/sbt
-# ENV SBT_VERSION = 1.3.3
+ENV SBT_HOME=sbt
+ENV SBT_VERSION = 1.3.3
 
-# RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
-#     cd "/tmp" && \
-#     wget https://piccolo.link/sbt-1.3.3.tgz && \
-#     tar -xzvf sbt-1.3.3.tgz && \
-#     mkdir "${SBT_HOME}" && \
-#     rm "/tmp/${SBT_HOME}/bin/"*.bat && \
-#     mv "/tmp/${SBT_HOME}/bin" "/tmp/${SBT_HOME}/lib" "${SBT_HOME}" && \
-#     ln -s "${SBT_HOME}/bin/"* "/usr/bin/" && \
-#     apk del .build-dependencies && \
-#     rm -rf "/tmp/"*
+RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
+    cd "/tmp/" && \
+    wget https://piccolo.link/sbt-1.3.3.tgz && \
+    tar -xzvf sbt-1.3.3.tgz && \
+    mkdir "${SBT_HOME}" && \
+    rm "/tmp/${SBT_HOME}/bin/"*.bat && \
+    mv "/tmp/${SBT_HOME}/bin" "/tmp/${SBT_HOME}/lib" "${SBT_HOME}" && \
+    ln -s "${SBT_HOME}/bin/"* "/usr/bin/" && \
+    apk del .build-dependencies && \
+    rm -rf "/tmp/"*
 
 ENV HOME /home/runner
 WORKDIR /home/runner
