@@ -42,4 +42,4 @@ USER runner
 # ENTRYPOINT ["/home/runner/artifacts/bin/idm_keycloak-load-testing_master"]
 
 # ENTRYPOINT [ "sbt -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2", "gatling:test" ]
-CMD ["sbt gatling:test"]
+CMD sbt gatling:test
