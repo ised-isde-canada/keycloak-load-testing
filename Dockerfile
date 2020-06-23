@@ -1,6 +1,6 @@
 FROM anapsix/alpine-java
 
-ENV SBT_HOME=sbt
+ENV SBT_HOME=usr/sbt
 ENV SBT_VERSION = 1.3.3
 
 RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
