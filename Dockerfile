@@ -39,6 +39,8 @@ RUN chgrp -Rf root /home/runner && chmod -Rf g+w /home/runner
 
 ENV RUNNER_USER runner
 
+COPY . .
+
 EXPOSE 8080
 
 USER runner
