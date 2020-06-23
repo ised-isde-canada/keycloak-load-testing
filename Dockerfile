@@ -12,12 +12,12 @@ ENV SBT_VERSION = 1.3.3
 #     rm -rf "/tmp/"*
 
 RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
-    cd "/tmp" && \
+    cd "/tmp/" && \
     wget https://piccolo.link/sbt-1.3.3.tgz && \
     tar -xzvf sbt-1.3.3.tgz && \
     ls -la && \
-    rm "/tmp/sbt/bin/"*.bat && \
-    mv "/tmp/sbt/bin" "/tmp/sbt/lib" "${SBT_HOME}" && \
+    rm "sbt/bin/"*.bat && \
+    mv "sbt/bin" "/tmp/sbt/lib" "${SBT_HOME}" && \
     ln -s "${SBT_HOME}/bin/"* "/usr/bin/" && \
     apk del .build-dependencies && \
     rm -rf "/tmp/"*
