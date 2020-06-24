@@ -44,4 +44,6 @@ EXPOSE 8080
 # ENTRYPOINT [ "sbt -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2", "gatling:test" ]
 # CMD sbt gatling:test
 
-CMD sbt sbtVersion
+RUN sbt sbtVersion
+
+CMD sbt gatling:test
