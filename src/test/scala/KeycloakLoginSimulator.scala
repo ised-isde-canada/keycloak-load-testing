@@ -11,7 +11,7 @@ import java.util.UUID
 class KeycloakLoginSimulator extends Simulation{
 
     // Number of login requests to simulate on execution
-    val numberOfLogins = 10
+    val numberOfLogins = 70
 
     // TESTING ACCESS TO SYSTEM VARIABLES
     // val keycloakServer = System.getenv("LOCAL_HOST")
@@ -36,6 +36,7 @@ class KeycloakLoginSimulator extends Simulation{
     **/
     //.proxy(Proxy("cdhwg01.prod.prv", 80))
     val httpConfig = http
+    .proxy(Proxy("cdhwg01.prod.prv", 80))
         .baseUrl(keycloakServer)
         .acceptEncodingHeader("gzip, deflate")
 		.acceptLanguageHeader("pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6")
