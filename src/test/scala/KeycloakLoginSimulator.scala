@@ -70,7 +70,7 @@ class KeycloakLoginSimulator extends Simulation{
 		)
     
 
-    val scn = scenario("Testing the realm connection for test user")
+    val scn = scenario("Connection")
         .exec(http("First unauthenticated request")
         .get("https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/protocol/openid-connect/auth")
         .queryParam("redirect_uri", "https://sso-dev.ised-isde.canada.ca/auth/realms/load-testing/login-redirect")
