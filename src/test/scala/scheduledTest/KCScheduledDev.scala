@@ -12,7 +12,7 @@ import java.util.UUID
 class KCScheduledDev extends Simulation{
 
     // Number of login requests to simulate on execution
-    val numberOfLogins = 500
+    val numberOfLogins = 50
 
     // TESTING ACCESS TO SYSTEM VARIABLES
     // val keycloakServer = System.getenv("LOCAL_HOST")

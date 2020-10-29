@@ -9,17 +9,17 @@ import scala.concurrent.duration._
 object Main extends App{
 
     
-    println("Running normal load test against - LOCAL")
+    // println("Running normal load test against - LOCAL")
 
-    def runLoadTestLOCAL() = {
-        "sbt gatling:testOnly scheduledTest.KCScheduledTest".!
-    }
-
-    // println("Running normal load test against - DEV")
-
-    // def runLoadTestDEV () = {
-    //     "sbt gatling:testOnly scheduledTest.KCScheduledDev".!
+    // def runLoadTestLOCAL() = {
+    //     "sbt gatling:testOnly scheduledTest.KCScheduledTest".!
     // }
+
+    println("Running normal load test against - DEV")
+
+    def runLoadTestDEV () = {
+        "sbt gatling:testOnly scheduledTest.KCScheduledDev".!
+    }
 
     // println("Running normal load test against - DEMO")
     
